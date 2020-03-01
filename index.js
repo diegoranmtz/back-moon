@@ -15,7 +15,11 @@ app.use(function(req, res, next) {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+var accionRoutes = require("./routes/accion");
 var loginRoutes = require("./routes/login");
+var monederoRoutes = require("./routes/monedero");
+var paginaRoutes = require("./routes/pagina");
+var precioRoutes = require("./routes/precio");
 var usuarioRoutes = require("./routes/usuario");
 
 mongoose.connection.openUri("mongodb://localhost:27017/moon",(err,res)=>{
@@ -24,7 +28,11 @@ mongoose.connection.openUri("mongodb://localhost:27017/moon",(err,res)=>{
   console.log("Base de datos: \x1b[32m%s\x1b[0m", "online");
 });
 
+app.use("/accion", accionRoutes);
 app.use("/login", loginRoutes);
+app.use("/monedero", monederoRoutes);
+app.use("/pagina", paginaRoutes);
+app.use("/precio", precioRoutes);
 app.use("/usuario", usuarioRoutes);
 
 app.listen(3000, function () {
