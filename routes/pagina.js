@@ -6,6 +6,36 @@ var Pagina = require("../models/pagina");
 //=========================================================
 // Select by user
 //=========================================================
+app.post("/guardar/", (req, res)=>{
+
+  var body = req.body;
+  var pagina = new Pagina({
+    usuario: body.usuario,
+    paginaKey: body.paginaKey,
+    accionKey: body.accionKey,
+    precioBuy: body.precioBuy,
+    cantidad: body.cantidad
+  });
+
+  pagina.save((err, hospitalGuardado)=>{
+    if (err) {
+      return res.status(400).json({
+        ok: false,
+        mensaje: "Error guardar pagina",
+        errors: err
+      });
+    }
+
+    res.status(201).json({
+      ok: true,
+      pagina: hospitalGuardado
+    });
+  });
+});
+
+//=========================================================
+// Select by user
+//=========================================================
 app.post("/",(req, res)=>{
 
   var body = req.body;
