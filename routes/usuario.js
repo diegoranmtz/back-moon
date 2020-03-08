@@ -33,4 +33,36 @@ app.post("/", (req, res)=>{
   });
 });
 
+//=========================================================
+// Select by account
+//=========================================================
+app.post("/user/",(req, res)=>{
+
+  var body = req.body;
+
+  Usuario.find({account: body.account},(err, usuarioBD)=>{
+    if(err){
+      return res.status(500).json({
+        ok: false,
+        mensaje: "Error al buscar usuario",
+        errors: err
+      });
+    }
+
+    if(!usuarioBD){
+      return res.status(200).json({
+        ok: false,
+        mensaje: "No hay registro",
+        errors: err
+      });
+    }
+
+    res.status(200).json({
+      ok: true,
+      acion: usuarioBD,
+      id: usuarioBD._id,
+    });
+  });
+});
+
 module.exports = app;
